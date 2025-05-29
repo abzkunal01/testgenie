@@ -1,0 +1,161 @@
+﻿##Comments section ##,S2T--RETAIL_MORTGAGE_PROP_DERV,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+TECHNICAL ANALYSIS,FUNCTIONAL ANALYSIS,FUNCTIONAL ANALYSIS,FUNCTIONAL ANALYSIS,FUNCTIONAL ANALYSIS,FUNCTIONAL/TECHNICAL ANALYSIS,FUNCTIONAL ANALYSIS,FUNCTIONAL ANALYSIS,FUNCTIONAL ANALYSIS,FUNCTIONAL ANALYSIS,FUNCTIONAL ANALYSIS,FUNCTIONAL ANALYSIS,FUNCTIONAL ANALYSIS,FUNCTIONAL/TECHNICAL ANALYSIS,FUNCTIONAL ANALYSIS,FUNCTIONAL ANALYSIS,FUNCTIONAL ANALYSIS,FUNCTIONAL ANALYSIS,FUNCTIONAL ANALYSIS
+key,title,description,steward:user,business unit ownership,data classification,data domain,data accesss group,alternative name(s),business usage,business process,business rules,system of records,info class rationale,permissible values,sample values,master reference data,prBEWEDling,data sampling
+TARGET_BOLL.RETAIL_MORTGAGE_PROP_DERV,Business View Retail Banking Services Account Mortgaged Property Derived,This table provide the details of HOUSE and PLOT VLOC accounts and the count of Mortgaged investment property count,Saba,Retail,Customer & personal,Home buying,Malvia Properties - Data - Restricted Home Buying Access,,This table data which contains count of mortgaged investment property count is sent to GTRS and made available in BAL layer,,,,N/A,,,YES,,
+TARGET_BOLL.RETAIL_MORTGAGE_PROP_DERV.ACCOUNT_ID,Account Identifier Business Key,Unique identifier for HOUSE & PLOT accounts and it is in business key format of the Malvia Properties framework,Saba,Retail,Customer & personal,Home buying,Malvia Properties - Data - Restricted Home Buying Access,,,No PII Involved,"Source Column:ACCOUNT_ID
+Source table: SRC_REF.ACC_DETAIL
+Mapping Logic:1-1",SRC_REF_ACC_DETAIL,N/A,VARCHAR(255),"HOUSE~467859222
+PLOT~279913492426",YES,Cannot be NULL,N/A
+TARGET_BOLL.RETAIL_MORTGAGE_PROP_DERV.LOAD_DATE,Load Date,Business date,Saba,Retail,Customer & personal,Home buying,Malvia Properties - Data - Restricted Home Buying Access,,,No PII Involved,Business date,NA,N/A,DATE,20/07/2022,YES,Cannot be NULL,N/A
+TARGET_BOLL.RETAIL_MORTGAGE_PROP_DERV.PROP_COUNT,Mortgaged Investment Property Count,This column provides count of mortgaged investment property linked to home loan account. This count exclusively include the investment property,Saba,Retail,Customer & personal,Home buying,Malvia Properties - Data - Restricted Home Buying Access,,,No PII Involved,"Source Column:ACCOUNT_ID, CMS_EXACT_MATCH_KEY as FULL_ADDRS
+Source table: TARGET_BOLL_PII.RETAIL_MORTGAGE_PROP_DETL
+DATA_CUSTOMER.CSE_ASET_AL_PROP_CURR
+Mapping Logic: Derived
+COUNT(DISTINCT INV_FULL_ADDRS) AS CNT WHERE PROP_CATG='INVESTMENT PROPERTY'",NA,N/A,,,YES,,
+TARGET_BOLL.RETAIL_MORTGAGE_PROP_DERV.PROP_FLAG,Mortgaged Investment Property Flag,This column indicates whether the number of mortgaged investment property linked to loan account >5 or not,Saba,Retail,Customer & personal,Home buying,Malvia Properties - Data - Restricted Home Buying Access,,,No PII Involved,"Source Column:ACCOUNT_ID, CMS_EXACT_MATCH_KEY as FULL_ADDRS
+Source table: TARGET_BOLL_PII.RETAIL_MORTGAGE_PROP_DETL
+DATA_CUSTOMER.CSE_ASET_AL_PROP_CURR
+Mapping Logic: Derived
+COUNT(DISTINCT INV_FULL_ADDRS) AS CNT>5, THEN Y ELSE N",NA,N/A,,,YES,,
+TARGET_BOLL.RETAIL_MORTGAGE_PROP_DERV.SRCE_CODE,Source System Code,Unique account identifier from the source system example: HOUSE & PLOT systems,Saba,Retail,Customer & personal,Home buying,Malvia Properties - Data - Restricted Home Buying Access,,,No PII Involved,"Source Column: SRC_IND
+Source table: SRC_REF.ACC_DETAIL
+Mapping Logic:1-1",SRC_REF_ACC_DETAIL,N/A,CHAR(4),"HOUSE, PLOT",YES,Cannot be NULL,"HOUSE, PLOT"
+,,,,,,,,,,,,,,,,,,
+S2T--RETAIL_MORTGAGE_PROP_DETL,,,,,,,,,,,,,,,,,,
+TECHNICAL ANALYSIS,FUNCTIONAL ANALYSIS,FUNCTIONAL ANALYSIS,FUNCTIONAL ANALYSIS,FUNCTIONAL ANALYSIS,FUNCTIONAL/TECHNICAL ANALYSIS,FUNCTIONAL ANALYSIS,FUNCTIONAL ANALYSIS,FUNCTIONAL ANALYSIS,FUNCTIONAL ANALYSIS,FUNCTIONAL ANALYSIS,FUNCTIONAL ANALYSIS,FUNCTIONAL ANALYSIS,FUNCTIONAL/TECHNICAL ANALYSIS,FUNCTIONAL ANALYSIS,FUNCTIONAL ANALYSIS,FUNCTIONAL ANALYSIS,FUNCTIONAL ANALYSIS,FUNCTIONAL ANALYSIS
+key,title,description,steward:user,business unit ownership,data classification,data domain,data accesss group,alternative name(s),business usage,business process,business rules,system of records,info class rationale,permissible values,sample values,master reference data,data prBEWEDling,data sampling
+TARGET_BOLL_PII.RETAIL_MORTGAGE_PROP_DETL,Business View Retail Banking Services Account Mortgaged Property Detail,"This table provide the details of HOUSE & PLOT VLOC accounts and it's linked application, Asset and customer information and provide the information on whether the linked Asset is either Residential or investment property",Saba,Retail,Customer & Personal,Home Buying,Malvia Properties - Data - Restricted Home Buying Access,,,,,,N/A,,,Yes,,
+TARGET_BOLL_PII.RETAIL_MORTGAGE_PROP_DETL.ASSET_ID,Asset Identifier Business Key,Unique identifier for assets and it is in business key format of the Malvia Properties Framework,Saba,Retail,Customer & Personal,Home Buying,Malvia Properties - Data - Restricted Home Buying Access,,,No PII Involved,"Source Column: ASSET_ID
+Source table: DATA_CUSTOMER.CSE_ASET_AL_BASE_CURR
+Mapping Logic: 1-1",DATA_CUSTOMER.CSE_ASET_AL_BASE_CURR,N/A,VARCHAR(255),CSE~AP~99999999999,Yes,Cannot be NULL,N/A
+TARGET_BOLL_PII.RETAIL_MORTGAGE_PROP_DETL.ACCOUNT_ID,Account Identifier Business Key,Unique identifier for HOUSE & PLOT accounts and it is the business key format of the Malvia Properties Framework,Saba,Retail,Customer & Personal,Home Buying,Malvia Properties - Data - Restricted Home Buying Access,,,No PII Involved,"Source Column: ACCOUNT_ID
+Source table: SRC_REF.ACC_DETAIL
+Mapping Logic: 1-1",SRC_REF.ACC_DETAIL,N/A,VARCHAR(255),"HOUSE~999999999
+PLOT~999999999999",Yes,Cannot be NULL,N/A
+TARGET_BOLL_PII.RETAIL_MORTGAGE_PROP_DETL.PARTY_ID,Party Identifier Business Key,A business key that is used as a unique value for a party that helps in relating party to other entities and it is in business key format of the Malvia Properties Framework,Saba,Retail,Customer & Personal,Home Buying,Malvia Properties - Data - Restricted Home Buying Access,,,No PII Involved,"Source Column: PARTY_ID
+Source table: SRC_REF.APART_PARTY
+Mapping Logic: 1-1", SRC_REF.APART_PARTY,N/A,VARCHAR(255),PLOT~+99999999999,Yes,Cannot be NULL,N/A
+TARGET_BOLL_PII.RETAIL_MORTGAGE_PROP_DETL.LOAD_DATE,Snap Date,Business date,Saba,Retail,Customer & Personal,Home Buying,Malvia Properties - Data - Restricted Home Buying Access,,,No PII Involved,Business date,N/A,N/A,DATE,20/07/2022,Yes,Cannot be NULL,N/A
+TARGET_BOLL_PII.RETAIL_MORTGAGE_PROP_DETL.SRCE_SYST_ACCT_I,Source System Account Identifier,Unique account identifier fro the source system e.g. HOUSE & PLOT systems,Saba,Retail,Customer & Personal,Home Buying,Malvia Properties - Data - Restricted Home Buying Access,,,No PII Involved,"Source Column: SRCE_SYST_ACCT_I
+Source table: SRC_REF.ACC_DETAIL
+Mapping Logic: 1-1",SRC_REF.ACC_DETAIL,N/A,VARCHAR(255),"999999999
+999999999999",Yes,Cannot be NULL,N/A
+TARGET_BOLL_PII.RETAIL_MORTGAGE_PROP_DETL.ACCT_SRCE_SYST_PDCT_C,Account Source System Product Code,"This column provides the Product code details for the HOUSE & PLOT VLOC accounts. For HOUSE accounts, the product code is assigned from source system code and assign 974 to PLOT VLOC accounts",Saba,Retail,Customer & Personal,Home Buying,Malvia Properties - Data - Restricted Home Buying Access,,,No PII Involved,"Source Column: WMAST_NAME_ID
+Source table:RETIAL_HOME_LOAN.LOAN_MSTR_HIST
+Mapping Logic: Derived 
+when SRCE_CODE=""HOUSE"" THEN "" WMAST_NAME_ID""
+WHEN SRCE_CODE=""PLOT"" THEN ""974""",RETIAL_HOME_LOAN.LOAN_MSTR_HIST,N/A,CHAR(4),"1,2,974",Yes,Cannot be NULL,"1,2,974"
+TARGET_BOLL_PII.RETAIL_MORTGAGE_PROP_DETL.SRCE_SYST_APPT_I,Source System Application Identifier,"This column provides the Source system application number, which is a key uniquely identifying applications linked to the Loan",Saba,Retail,Customer & Personal,Home Buying,Malvia Properties - Data - Restricted Home Buying Access,,,No PII Involved,"Source Column: APPT_ID
+Source table: RETIAL_HOME_LOAN.HOUSE_LOAN_MSTR_HIST OR DATA_CUSTOMER.PLOT_HL_APP
+Mapping Logic: Derived
+SUBSTRING(STRING(APPT_ID), 8, 18)", RETIAL_HOME_LOAN.HOUSE_LOAN_MSTR_HIST OR DATA_CUSTOMER.PLOT_HL_APP,N/A,VARCHAR(255),1000000000000,Yes,Cannot be NULL,N/A
+TARGET_BOLL_PII.RETAIL_MORTGAGE_PROP_DETL.APPT_STUS_M,Application Status Name,"This column provides status of the applications for HL products. Below are the few samples of application status:
+-Funded
+-Formally Approved
+-Completed
+-Fullfilment - In Progress",Saba,Retail,Customer & Personal,Home Buying,Malvia Properties - Data - Restricted Home Buying Access,,,No PII Involved,"Source Column: STATE_DE
+Source table: SRC_REF.APPT_STUS
+Mapping Logic: 1-1",SRC_REF.APPT_STUS,N/A,VARCHAR(40),"Funded
+Formally Approved
+Completed",Yes,Cannot be NULL,"Funded
+Formally Approved
+Completed"
+TARGET_BOLL_PII.RETAIL_MORTGAGE_PROP_DETL.SRCE_CODEUST_I,Source System Customer Identifier,"This column provides the Source system customer number, which is a key uniquely identifying client's reference number from source system",Saba,Retail,Customer & Personal,Home Buying,Malvia Properties - Data - Restricted Home Buying Access,,,No PII Involved,"Source Column: SUBSTRING(STRING(PARTY_ID), 9, 18)
+Source table: DATA_CUSTOMER.APPT_STAT
+Mapping Logic: 1-1",DATA_CUSTOMER.APPT_STAT,N/A,VARCHAR(255),9999999,Yes,Cannot be NULL,9999999
+TARGET_BOLL_PII.RETAIL_MORTGAGE_PROP_DETL.CUST_REL_ROLE_C,Customer Relationship Role Code,"This determines the role code of the customer on the application. E.g: the role code 8 (owner), 9(Related Party) from which we can identify what is the relationship of the customer with the corresponding application",Saba,Retail,Customer & Personal,Home Buying,Malvia Properties - Data - Restricted Home Buying Access,,,No PII Involved,"Source Column: APART_PARTY_ROLE_C
+Source table: SRC_REF.APART_PARTY
+Mapping Logic: 1-1",SRC_REF.APART_PARTY,N/A,CHAR(4),"3,6",Yes,Cannot be NULL,"3,6"
+TARGET_BOLL_PII.RETAIL_MORTGAGE_PROP_DETL.CUST_REL_ROLE_X,Customer Relationship Role Description,"This determines the role code description of the customer on the application. E.g:Omner, guarantor etc..
+Values:
+-applicant: for applications such as home loans where there is nodistinction between applicants
+-guarantor: guarantor to a loan",Saba,Retail,Customer & Personal,Home Buying,Malvia Properties - Data - Restricted Home Buying Access,,,No PII Involved,"Source Column: ROLE_DESE
+Source table: DATA_CUSTOMER.CSE_ROLE_CATG
+Mapping Logic: 1-1",DATA_CUSTOMER.CSE_ROLE_CATG,N/A,VARCHAR(255),"Applicant
+Related Party",Yes,Cannot be NULL,"Applicant
+Related Party"
+TARGET_BOLL_PII.RETAIL_MORTGAGE_PROP_DETL.LOAN_PURP_X,Loan Purpose Text,"This column provides the loan purpose details for related accounts wheter it is investment or residential, which is assigned based on the investment flag. Investment flag will be ""Y"" if the underlying GRD product name recorded for the corresponding application is investment Home Loan, else ""N""",Saba,Retail,Customer & Personal,Home Buying,Malvia Properties - Data - Restricted Home Buying Access,,,No PII Involved,"Source Column: INVESTMENT_FLAG
+Source table: CUSTOMER.CSE_HL_LOAN_PURPOSE_CAT
+Mapping Logic: Derive
+WHEN INVESTMENT_FLAG=""N"" THEN 'RESIDENTIAL'
+WHEN INVESTMENT_FLAG=""Y"" THEN ""INVESTMENT""",CUSTOMER.CSE_HL_LOAN_PURPOSE_CAT,N/A,VARCHAR(255),"Residential
+Investment",Yes,Cannot be NULL,"Residential
+Investment"
+TARGET_BOLL_PII.RETAIL_MORTGAGE_PROP_DETL.LOAN_BALN_A,Loan Balance Amount,This column provides the current loan balance for HOUSE & PLOT accounts,Saba,Retail,Customer & Personal,Home Buying,Malvia Properties - Data - Restricted Home Buying Access,,,No PII Involved,"Source Column: LOAN_BALANCE ACCT_BAL_A
+Source table: RETIAL_HOME_LOAN.HOUSE_LOAN_MSTR_HIST
+SRC_REF.ACCT_BALN
+Mapping Logic: Derived
+when SRCE_CODE='HOUSE' THEN "" RETIAL_HOME_LOAN.HOUSE_LOAN_MSTR_HIST. LOAN_BALANCE""
+WHEN SRCE_CODE=""PLOT"" THEN ""SRC_REF.ACCT_BALN.ACCT_BALN_A""","RETIAL_HOME_LOAN.HOUSE_LOAN_MSTR_HIST
+SRC_REF.ACCT_BALN",N/A,"DECIMAL(15,2)","112345.5
+200565",Yes,Cannot be NULL,N/A
+TARGET_BOLL_PII.RETAIL_MORTGAGE_PROP_DETL.SRCE_SYST_ASET_I,Source System Asset Identifier,"Identifier of an Asset or Liability that is unique across all the source systems within the Group Data Warehouse.
+Note: An asset is an item owned by a person or organisation, regarded as having value and available to meet debts, commitments, or legacies
+A Liability is a thing for which a person or organisation is responsible, especially an amount of money owned",Saba,Retail,Customer & Personal,Home Buying,Malvia Properties - Data - Restricted Home Buying Access,,,No PII Involved,"Source Column: ASSET_LIABILITY_ID
+Source table: DATA_CUSTOMER.CSE_ASET_AL_BASE_HIST
+Mapping Logic: 1-1",DATA_CUSTOMER.CSE_ASET_AL_BASE_HIST,N/A,VARCHAR(255),999999999,Yes,Cannot be NULL,N/A
+TARGET_BOLL_PII.RETAIL_MORTGAGE_PROP_DETL.PROP_TRTP_C,Property Transaction Type Code,This column contains the property transaction type code which describes whether the property is Purchased and the details can come from CMS or POCC system,Saba,Retail,Customer & Personal,Home Buying,Malvia Properties - Data - Restricted Home Buying Access,,,No PII Involved,"Source Column: ASSET_LIABILITY_ID
+Source table: DATA_CUSTOMER.CSE_ASET_AL_BASE_HIST
+Mapping Logic: Derived
+when ASSET_LIABILITY_ID from ZINGER AND OWNED THEN 'Owned Property'
+when ASSET_LIABILITY_ID from ZINGER then 'Purchase Property_CMS'
+when ASSET_LIABILITY_ID from POCC then 'Purchase Property_POCC'
+",Derived,N/A,CHAR(4),"Owned Property
+Purchase Property_CMS
+Purchase Property_POCC",Yes,Cannot be NULL,"Owned Property
+Purchase Property_CMS
+Purchase Property_POCC"
+TARGET_BOLL_PII.RETAIL_MORTGAGE_PROP_DETL.PROP_CATG_X,Property Category Text,This column contains the property category type which describes whether the property ia investment or Residential,Saba,Retail,Customer & Personal,Home Buying,Malvia Properties - Data - Restricted Home Buying Access,,,No PII Involved,"Source Column: AL_TYPE_ID
+Source table: DATA_CUSTOMER.CSE_ASET_AL_BASE_HIST
+Mapping Logic: Derived
+when AL_TYPE_ID = '4' THEN 'RESIDENTIAL PROPERTY' ELSE 'INVESTMENT PROPERTY'
+2. Address details are from output 8
+CASE WHEN CATEGORY = 'R' THEN 'RESIDENTIAL PROPERTY' ELSE 'INVESTMENT PROPERTY' THEN END AS PROP_CATG",Derived,N/A,VARCHAR(255),"Residential Property
+Investment Property",Yes,Cannot be NULL,"Residential Property
+Investment Property"
+TARGET_BOLL_PII.RETAIL_MORTGAGE_PROP_DETL.SECU_F,Security Flag,This column describes whether the Asset is security and non-security,Saba,Retail,Customer & Personal,Home Buying,Malvia Properties - Data - Restricted Home Buying Access,,,No PII Involved,"Source Column: ASSET_LIABILITY_ID
+Source table: CUSTOMER.CSE_HL_APP_SECURITY
+Mapping Logic: Derived
+when ASSET_LIABILITY_ID is NOT NULL then 'Y'
+when ASSET_LIABILITY_ID is NULL then 'N'",CUSTOMER.CSE_HL_APP_SECURITY,N/A,CHAR(1),"Y, N",Yes,Cannot be NULL,"Y, N"
+TARGET_BOLL_PII.RETAIL_MORTGAGE_PROP_DETL.CUST_OWN_P,Customer Ownership Percentage,This column contains the percentage of Ownership that customer has on the Asset linked. This details is available for both Residential and investment property,Saba,Retail,Customer & Personal,Home Buying,Malvia Properties - Data - Restricted Home Buying Access,,,No PII Involved,"Source Column: PCT_OWNERSHIP / PARTY_ID
+Source table: PR_ZINGER_PERSONALBALANCESHEET.AL_OWNERSHIP
+PR_POCC.SECURITY
+Mapping Logic: Derived
+when Output6.PCT_OWNERSHIP OR
+WHEN SUBSTRING(STRING(PARTY_ID), 9, 18)= 'inc_ownership_applicant_1/2/3/4/5/6/7/8/9/10 then inc_ownership_percentage_1/2/3/4/5/6/7/8/9/10","PR_ZINGER_PERSONALBALANCESHEET.AL_OWNERSHIP
+PR_POCC.SECURITY",N/A,"DECIMAL(5,2)",50100,Yes,Cannot be NULL,50100
+TARGET_BOLL_PII.RETAIL_MORTGAGE_PROP_DETL.MRTG_LOAN_LEND_X,Mortgage Loan Lender Text,"Mortgage Loan Lender text contains details of Loan Lender, whether it is BOAAA or BEWED",Saba,Retail,Customer & Personal,Home Buying,Malvia Properties - Data - Restricted Home Buying Access,,,No PII Involved,"Source Column: EXTERNAL_CMS_ASSET_ID
+Source table: DATA_CUSTOMER.CSE_ASET_AL_BASE_HIST
+Mapping Logic: Derived
+when EXTERNAL_CMS_ASSET_ID is NOT NULL then 'BOAAA'
+when EXTERNAL_CMS_ASSET_ID is NOT NULL then 'BEWED'",DATA_CUSTOMER.CSE_ASET_AL_BASE_HIST,N/A,VARCHAR(255),"BOAAA
+BEWED",Yes,Cannot be NULL,"BOAAA
+BEWED"
+TARGET_BOLL_PII.RETAIL_MORTGAGE_PROP_DETL.MRTG_F,Mortgages Flag,Mortgaged Flag column represents whether the asset is Mortgaged,Saba,Retail,Customer & Personal,Home Buying,Malvia Properties - Data - Restricted Home Buying Access,,,No PII Involved,"Source Column: N/A
+Source table: N/A
+Mapping Logic: Assign Y",N/A,N/A,CHAR(1),Y,Yes,Cannot be NULL,Y
+TARGET_BOLL_PII.RETAIL_MORTGAGE_PROP_DETL.PROP_ADRS_LINE1_X,Property Address Line 1 Text,This column has the Address Line 1 for the investment and residential properties linked to accounts,Saba,Retail,Customer & Personal,Home Buying,Malvia Properties - Data - Restricted Home Buying Access,,,No PII Involved,"Source Column: ADDRESS_LINE_1 / LINE1
+Source table: DATA_CUSTOMER.CSE_ASET_AL_PROP_HIST.ADDRESS_LINE_1/PR_POCC.ADDRESS_LINE1
+Mapping Logic: 1-1",DATA_CUSTOMER.CSE_ASET_AL_PROP_HIST.ADDRESS_LINE_1/PR_POCC.ADDRESS_LINE1,N/A,VARCHAR(255),JAKAPONG RD,Yes,Cannot be NULL,N/A
+TARGET_BOLL_PII.RETAIL_MORTGAGE_PROP_DETL.PROP_ADRS_LINE2_X,Property Address Line2 Text,This column has the Address Line 2 for the investment and residential properties linked to accounts,Saba,Retail,Customer & Personal,Home Buying,Malvia Properties - Data - Restricted Home Buying Access,,,No PII Involved,"Source Column: ADDRESS_LINE_2 / LINE2
+Source table: DATA_CUSTOMER.CSE_ASET_AL_PROP_HIST.ADDRESS_LINE_2/PR_POCC.ADDRESS_LINE2
+Mapping Logic: 1-1",DATA_CUSTOMER.CSE_ASET_AL_PROP_HIST.ADDRESS_LINE_2/PR_POCC.ADDRESS_LINE2,N/A,VARCHAR(255),JAKAPONG RD,Yes,Cannot be NULL,N/A
+TARGET_BOLL_PII.RETAIL_MORTGAGE_PROP_DETL.PROP_ADRS_SURB_X,Property Address Suburb Text,This column has theSuburb details for the investment and residential properties linked to accounts,Saba,Retail,Customer & Personal,Home Buying,Malvia Properties - Data - Restricted Home Buying Access,,,No PII Involved,"Source Column: SUBURB / CITY
+Source table: DATA_CUSTOMER.CSE_ASET_AL_PROP_HIST.SUBURB/PR_POCC.ADDRESS_CITY
+Mapping Logic: 1-1",DATA_CUSTOMER.CSE_ASET_AL_PROP_HIST.SUBURB/PR_POCC.ADDRESS_CITY,N/A,VARCHAR(255),Bondi,Yes,Cannot be NULL,N/A
+TARGET_BOLL_PII.RETAIL_MORTGAGE_PROP_DETL.PROP_ADRS_STAT_CODE_X,Property Address State Code Text,This column has the state details for the investment and residential properties linked to accounts,Saba,Retail,Customer & Personal,Home Buying,Malvia Properties - Data - Restricted Home Buying Access,,,No PII Involved,"Source Column: STATE / STATE
+Source table: DATA_CUSTOMER.CSE_ASET_AL_PROP_HIST.STATE/PR_POCC.STATE
+Mapping Logic: 1-1",DATA_CUSTOMER.CSE_ASET_AL_PROP_HIST.STATE/PR_POCC.STATE,N/A,VARCHAR(255),JET,Yes,Cannot be NULL,N/A
+TARGET_BOLL_PII.RETAIL_MORTGAGE_PROP_DETL.PROP_ADRS_PSTL_CODE_X,Property Address Postal Code Text,This column has the Postal details for the investment and residential properties linked to accounts,Saba,Retail,Customer & Personal,Home Buying,Malvia Properties - Data - Restricted Home Buying Access,,,No PII Involved,"Source Column: POSTCODE / POSTCODE
+Source table: DATA_CUSTOMER.CSE_ASET_AL_PROP_HIST.POSTCODE/PR_POCC.POSTCODE
+Mapping Logic: 1-1",DATA_CUSTOMER.CSE_ASET_AL_PROP_HIST.POSTCODE/PR_POCC.POSTCODE,N/A,VARCHAR(255),2026,Yes,Cannot be NULL,N/A
+TARGET_BOLL_PII.RETAIL_MORTGAGE_PROP_DETL.PROP_ADRS_CNTY_X,Property Address Country Code Text,This column has the Country text  for the investment and residential properties linked to accounts,Saba,Retail,Customer & Personal,Home Buying,Malvia Properties - Data - Restricted Home Buying Access,,,No PII Involved,"Source Column: COUNTRY / Hardcoded value 'AU'
+Source table: DATA_CUSTOMER.CSE_ASET_AL_PROP_HIST
+PR_POCC.ADDRESS
+Mapping Logic: 1-1", DATA_CUSTOMER.CSE_ASET_AL_PROP_HIST,N/A,VARCHAR(255),JET,Yes,Cannot be NULL,N/A
+TARGET_BOLL_PII.RETAIL_MORTGAGE_PROP_DETL.SRCE_CODE,Source System Code,Source system code like HOUSE/PLOT,Saba,Retail,Customer & Personal,Home Buying,Malvia Properties - Data - Restricted Home Buying Access,,,No PII Involved,"Source Column: SRCE_CODE
+Source table: SRC_REF.ACC_DETAIL
+PR_POCC.ADDRESS
+Mapping Logic: 1-1",SRC_REF.ACC_DETAIL,N/A,CHAR(4),"HOUSE,PLOT",Yes,Cannot be NULL,"HOUSE,PLOT"
